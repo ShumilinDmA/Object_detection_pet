@@ -3,3 +3,10 @@ venv/
 __pycache__/
 .jpg
 .gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/web_app.iml
+.idea/Project_Default.xml
+.idea/profiles_settings.xml
+
