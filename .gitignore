@@ -1,3 +1,5 @@
-venv
-.idea
-__pycache__
+venv/
+.idea/
+__pycache__/
+.jpg
+.gitignore
