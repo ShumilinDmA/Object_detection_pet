@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+    <title>{{ title }}</title>
+</head>
+<body>
+<!--        <div><a href="/index">Home</a> <a href="/inference">Inference</a></div>-->
+<!--        <hr>-->
+<!--        <form method="post" action="/get_image" enctype="multipart/form-data">-->
+<!--            Upload image to predict bounding boxes-->
+<!--            <br>-->
+<!--            <input type="file" name="img">-->
+<!--            <br>-->
+<!--            <button type="submit">Predict</button>-->
+<!--        </form>-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="/">Object Detection Project</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                  aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link active" href="index">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-item nav-link" href="inference">Inference</a>
+            </div>
+          </div>
+        </nav>
+
+        <form method="post" action="/get_image" enctype="multipart/form-data">
+          <div class="form-group">
+            <label>Upload image to predict bounding boxes</label>
+            <input type="file" class="form-control-file" id="img" name="img">
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+        {% block content %}{% endblock %}
+
+
+
+<script type="text/javascript" src="static/jquery-3.3.1.slim.min.js"></script>
+<script type="text/javascript" src="static/popper.min.js"></script>
+<script type="text/javascript" src="static/bootstrap.min.js"></script>
+</body>
+</html>
