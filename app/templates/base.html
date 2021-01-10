@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
     <style>
-
         body {
             background: linear-gradient(135deg, #7409c7, #ddb35f) fixed;
         }
@@ -50,6 +49,16 @@
         text-align: center;
         margin-top: 5%;
         }
+
+        .info {
+            color: white;
+            font-style: italic;
+            font-size: 15px;
+            position: fixed;
+            bottom: 5px;
+            left: 5px;
+        }
+
     </style>
     <title>{{ title }}</title>
 </head>
@@ -68,7 +77,6 @@
             </div>
           </div>
         </nav>
-
         <button class="open_my_button" onclick="openForm()">Try it!</button>
 
         <div class="form-popup" id="myForm" style="border-radius: 2px">
@@ -77,7 +85,6 @@
             <label>Upload image to predict bounding boxes</label>
             <input type="file" class="form-control-file" id="img" name="img">
           </div>
-<!--            <input type="submit" value="Submit">-->
             <button type="submit" class="btn btn-primary">Submit</button>
             <button type="button" class="btn btn-primary" onclick="closeForm()">Close</button>
         </form>

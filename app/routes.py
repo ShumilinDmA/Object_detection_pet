@@ -45,7 +45,19 @@ def inference():
 
 @app.route('/info')
 def info():
-    return render_template("info.html")
+    AUTHOR = 'Dmitrii Shumilin'
+    GITHUB = 'https://github.com/ShumilinDmA'
+    PROJECT_REPO = 'https://github.com/ShumilinDmA/Object_detection_pet'
+    E_mail = 'ShumilinDmAl@gmail.com'
+    NN_TYPE = 'ssd'
+    NN_IMG_URL = url_for('static', filename='network.png')
+    return render_template("info.html",
+                           author=AUTHOR,
+                           git=GITHUB,
+                           repo=PROJECT_REPO,
+                           email=E_mail,
+                           nn=NN_TYPE,
+                           nn_img=NN_IMG_URL)
 
 
 @app.after_request

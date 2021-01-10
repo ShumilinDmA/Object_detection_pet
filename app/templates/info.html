@@ -1,3 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
+
+<div class="info">
+    <p>Project author: {{author}}</p>
+    <p>E-mail address: {{email}}</p>
+    <p>Github: <a href="{{git}}" style="color:white"><ins>ShumilinDmA</ins></a></p>
+    <p>Project repo: <a href="{{repo}}" style="color:white"><ins>Link</ins></a></p>
+</div>
+
+<div class="images">
+    <img src="{{nn_img}}" alt="{{nn}}" width="700px" height="300px" style="margin-top: 0%">
+</div>
+
 {% endblock %}
