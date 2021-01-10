@@ -5,6 +5,10 @@ from PIL import Image
 
 
 @app.route('/')
+def empty():
+    return redirect('/index')
+
+
 @app.route('/index')
 def index():
     return render_template('index.html', title='Home', something='Object detection project!')
@@ -26,10 +30,22 @@ def get_image():
 def inference():
     ORIGINAL_IMAGE_ROUTE = 'app/static/test_img.png'
     PREDICTED_IMAGE_ROUTE = 'app/static/pred_img.png'
-    image = Image.open(ORIGINAL_IMAGE_ROUTE)
+    SCALE = 3
+    original_image = Image.open(ORIGINAL_IMAGE_ROUTE)
+    predicted_image = Image.open(PREDICTED_IMAGE_ROUTE)
+    width, height = original_image.size
     original_img_url = url_for('static', filename='test_img.png')
     predicted_img_url = url_for('static', filename='pred_img.png')
-    return render_template('inference.html', original_img_url=original_img_url, predicted_img_url=predicted_img_url)
+    return render_template('inference.html',
+                           original_img_url=original_img_url,
+                           predicted_img_url=predicted_img_url,
+                           width=width/SCALE,
+                           height=height/SCALE)
+
+
+@app.route('/info')
+def info():
+    return render_template("info.html")
 
 
 @app.after_request

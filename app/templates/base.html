@@ -3,18 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="static/bootstrap.min.css">
+    <style>
+
+        body {
+            background: linear-gradient(135deg, #7409c7, #ddb35f) fixed;
+        }
+
+        form {
+            margin: 0 auto;
+            width:300px;
+         }
+
+        .open_my_button {
+              background-color: #69b7eb;
+              color: white;
+              font-size: 15px;
+              font-weight: bold;
+              padding: 16px 20px;
+              border: none;
+              cursor: pointer;
+              opacity: 0.9;
+              position: fixed;
+              right: 50%;
+              left: 50%;
+              width: 280px;
+              transform: translate(-50%, -50%);
+              top: 13%
+        }
+
+        .form-popup {
+              display: None;
+              position: fixed;
+              color: white;
+              background-color: #4A0381;
+              opacity: 0.75;
+              padding: 16px 20px;
+              z-index: 9;
+              top: 50%;
+              margin-left: 50%;
+              margin-right: -50%;
+              transform: translate(-50%, -50%);
+
+        }
+
+        .images {
+        text-align: center;
+        margin-top: 5%;
+        }
+    </style>
     <title>{{ title }}</title>
 </head>
 <body>
-<!--        <div><a href="/index">Home</a> <a href="/inference">Inference</a></div>-->
-<!--        <hr>-->
-<!--        <form method="post" action="/get_image" enctype="multipart/form-data">-->
-<!--            Upload image to predict bounding boxes-->
-<!--            <br>-->
-<!--            <input type="file" name="img">-->
-<!--            <br>-->
-<!--            <button type="submit">Predict</button>-->
-<!--        </form>-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a class="navbar-brand" href="/">Object Detection Project</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
@@ -25,17 +64,24 @@
             <div class="navbar-nav">
               <a class="nav-item nav-link active" href="index">Home <span class="sr-only">(current)</span></a>
               <a class="nav-item nav-link" href="inference">Inference</a>
+              <a class="nav-item nav-link" href="info">Info</a>
             </div>
           </div>
         </nav>
 
+        <button class="open_my_button" onclick="openForm()">Try it!</button>
+
+        <div class="form-popup" id="myForm" style="border-radius: 2px">
         <form method="post" action="/get_image" enctype="multipart/form-data">
           <div class="form-group">
             <label>Upload image to predict bounding boxes</label>
             <input type="file" class="form-control-file" id="img" name="img">
-            <input type="submit" value="Submit">
           </div>
+<!--            <input type="submit" value="Submit">-->
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="closeForm()">Close</button>
         </form>
+        </div>
         {% block content %}{% endblock %}
 
 
@@ -43,5 +89,6 @@
 <script type="text/javascript" src="static/jquery-3.3.1.slim.min.js"></script>
 <script type="text/javascript" src="static/popper.min.js"></script>
 <script type="text/javascript" src="static/bootstrap.min.js"></script>
+<script type="text/javascript" src="static/eventForm.js"></script>
 </body>
 </html>

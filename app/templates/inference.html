@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<img src="{{original_img_url}}" alt="User image">
-<!--    <img src="{{predicted_img_url}}" alt="User image">-->
+<div class="images">
+    <img src="{{original_img_url}}" alt="User image" width="{{width}}" height="{{height}}">
+    <img src="{{predicted_img_url}}" alt="User image" width="{{width}}" height="{{height}}">
+</div>
 
 {% endblock %}
