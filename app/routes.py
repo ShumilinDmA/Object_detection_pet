@@ -1,7 +1,16 @@
 from app import app
 from flask import render_template, request, redirect, url_for
+from app.utils.utils import get_efficientdet, preprocessing, make_predictions, save_predictions
 
-from PIL import Image
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+ORIGINAL_IMAGE_ROUTE = 'app/static/test_img.png'
+IMG_SIZE = 640
+DEVICE = "cpu"
+
+effdet_net = get_efficientdet("app/model/efficientdet_d1.pth")
+effdet_net.to(DEVICE)
+effdet_net.eval()
+print("Model loaded!")
 
 
 @app.route('/')
@@ -17,23 +26,21 @@ def index():
 @app.route('/get_image', methods=["POST"])
 def get_image():
     file = request.files['img']
-    print(request.files)
-    print(file.filename)
     if file.filename == '':
         return redirect('/index')
-    image = Image.open(file, 'r')
-    image.save('app/static/test_img.png', 'PNG')
+    if file and (file.filename.split('.')[-1].lower() in ALLOWED_EXTENSIONS):
+        filename = 'app/static/test_img.png'
+        file.save(filename)
     return redirect('/inference')
 
 
 @app.route('/inference')
 def inference():
-    ORIGINAL_IMAGE_ROUTE = 'app/static/test_img.png'
-    PREDICTED_IMAGE_ROUTE = 'app/static/pred_img.png'
-    SCALE = 3
-    original_image = Image.open(ORIGINAL_IMAGE_ROUTE)
-    predicted_image = Image.open(PREDICTED_IMAGE_ROUTE)
-    width, height = original_image.size
+    img_tensor, height, width = preprocessing(img_path=ORIGINAL_IMAGE_ROUTE, img_size=IMG_SIZE)
+    predictions = make_predictions(effdet_net, img_tensor, score_threshold=0.45)
+    save_predictions(ORIGINAL_IMAGE_ROUTE, predictions, IMG_SIZE)
+
+    SCALE = 2
     original_img_url = url_for('static', filename='test_img.png')
     predicted_img_url = url_for('static', filename='pred_img.png')
     return render_template('inference.html',
@@ -62,7 +69,6 @@ def info():
 
 @app.after_request
 def add_header(response):
-    # response.cache_control.no_store = True
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '-1'
