@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 import cv2
-from efficientdet_pytorch.effdet import get_efficientdet_config, EfficientDet, DetBenchPredict
+from effdet import get_efficientdet_config, EfficientDet, DetBenchPredict
 from app.utils.mscoco_label_map import category_map
 
 
