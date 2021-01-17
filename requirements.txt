@@ -24,7 +24,7 @@ PyYAML==5.4b2
 requests==2.25.1
 six==1.15.0
 timm==0.3.4
-torch==1.7.1+cpu
+torch==1.7.1
 torchaudio==0.7.2
 torchvision==0.8.2+cpu
 typing-extensions==3.7.4.3
