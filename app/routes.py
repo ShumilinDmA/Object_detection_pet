@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from app.utils.utils import get_efficientdet, preprocessing, make_predictions, save_predictions
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -27,10 +27,14 @@ def index():
 def get_image():
     file = request.files['img']
     if file.filename == '':
+        flash("You didn't send any file!")
         return redirect('/index')
     if file and (file.filename.split('.')[-1].lower() in ALLOWED_EXTENSIONS):
         filename = 'app/static/test_img.png'
         file.save(filename)
+    else:
+        flash("Allowed extensions: .jpg, .jpeg, .png")
+        return redirect('/index')
     return redirect('/inference')
 
 
