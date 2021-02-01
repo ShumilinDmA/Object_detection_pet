@@ -1,7 +1,7 @@
-from flask import Flask
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
-app = Flask(__name__)
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-app.config['SECRET_KEY'] = 'secret_key'
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 from app import routes

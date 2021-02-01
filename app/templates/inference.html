@@ -2,8 +2,8 @@
 {% block content %}
 
 <div class="images">
-    <img src="{{original_img_url}}" alt="User image" width="{{width}}" height="{{height}}">
-    <img src="{{predicted_img_url}}" alt="User image" width="{{width}}" height="{{height}}">
+    <img src="{{url_for('static', path='/test_img.png')}}" alt="User image" width="{{width}}" height="{{height}}">
+    <img src="{{url_for('static', path='/pred_img.png')}}" alt="Pred image" width="{{width}}" height="{{height}}">
 </div>
 
 {% endblock %}

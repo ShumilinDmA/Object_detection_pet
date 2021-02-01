@@ -1,11 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-            <p class="flashes" style="color:white">{{message}}</p>
-        {% endfor %}
-    {% endif %}
 
 <div class="info" style="top: 85%; left: 20%; font-family: Comic Sans MS; font-size: 20px; width: 850px">
     <p> Welcome to the object detection project!
@@ -14,5 +8,4 @@
     <p></p>
 </div>
 
-{% endwith %}
 {% endblock %}
