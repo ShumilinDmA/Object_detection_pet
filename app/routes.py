@@ -26,18 +26,30 @@ print("Model loaded!")
 
 @app.get('/', response_class=HTMLResponse)
 async def empty():
+    """"
+    Redirect from default page to index.html
+    """
     return RedirectResponse('/index')
 
 
 @app.get('/index', response_class=HTMLResponse)
 async def index(request: Request):
+    """
+    Render index.html with form for image downloading
+    :param request:
+    :return:
+    """
     return templates.TemplateResponse('/index.html', {'request': request,
-                                                      'title': 'Home',
-                                                      'something': 'Object detection project!'})
+                                                      'title': 'Home'})
 
 
 @app.post('/get_image', response_class=HTMLResponse)
 async def get_image(img: UploadFile = File(...)):
+    """
+    Receive image, check name, extensions, save it as file and redirect to inference.html
+    :param img: image file from user
+    :return:
+    """
     if img.filename == '':
         return RedirectResponse('/index', status_code=status.HTTP_303_SEE_OTHER)
     if img and (img.filename.split('.')[-1].lower() in ALLOWED_EXTENSIONS):
@@ -51,8 +63,13 @@ async def get_image(img: UploadFile = File(...)):
 
 @app.get('/inference', response_class=HTMLResponse)
 async def inference(request: Request):
+    """
+    Performing object detection over user image and render inference.html with predicted results
+    :param request:
+    :return:
+    """
     img_tensor, height, width = preprocessing(img_path=ORIGINAL_IMAGE_ROUTE, img_size=IMG_SIZE)
-    predictions = make_predictions(effdet_net, img_tensor, score_threshold=0.45)
+    predictions = await make_predictions(effdet_net, img_tensor, score_threshold=0.45)
     save_predictions(ORIGINAL_IMAGE_ROUTE, predictions, IMG_SIZE)
 
     return templates.TemplateResponse('/inference.html',
@@ -64,6 +81,9 @@ async def inference(request: Request):
 
 @app.get('/info', response_class=HTMLResponse)
 async def info(request: Request):
+    """"
+    Render some info page about project, author and contacts
+    """
     return templates.TemplateResponse('/info.html', {'author': AUTHOR,
                                                      'request': request,
                                                      'title': 'Info',

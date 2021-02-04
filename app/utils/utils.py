@@ -6,6 +6,12 @@ from app.utils.mscoco_label_map import category_map
 
 
 def preprocessing(img_path: str = None, img_size: int = None) -> (torch.Tensor, int, int):
+    """
+    Preprocess user image to pass it to neural net
+    :param img_path: str - Path to saved user's image
+    :param img_size: int - Size of image for precessing it in neural net
+    :return: Tuple - (Tensor, height, width) original image.
+    """
     img = cv2.imread(img_path)[..., ::-1]
     img = np.array(img)/255.
     mean = (0.485, 0.456, 0.406)
@@ -23,7 +29,12 @@ def preprocessing(img_path: str = None, img_size: int = None) -> (torch.Tensor, 
     return img_tensor, h, w
 
 
-def get_efficientdet(checkpoint_path):
+def get_efficientdet(checkpoint_path: str):
+    """
+    Load model when application starts
+    :param checkpoint_path: Path to saved model in pytorch format
+    :return:
+    """
     config = get_efficientdet_config('efficientdet_d1')
     net = EfficientDet(config, pretrained_backbone=False)
     checkpoint = torch.load(checkpoint_path)
@@ -32,7 +43,14 @@ def get_efficientdet(checkpoint_path):
     return net
 
 
-def make_predictions(model, images, score_threshold=0.45):
+async def make_predictions(model, images, score_threshold: float = 0.45) -> list:
+    """
+    Perform detection of object on user's image
+    :param model: Pytorch neural net over effdet package
+    :param images: Images for predicting results
+    :param score_threshold: Threshold for confidence
+    :return: Predicted results in List
+    """
     predictions = []
     with torch.no_grad():
         detections = model(images)
@@ -52,7 +70,14 @@ def make_predictions(model, images, score_threshold=0.45):
     return predictions
 
 
-def save_predictions(img_path, predictions, img_size):
+def save_predictions(img_path: str, predictions: list, img_size: int) -> None:
+    """
+    Save original image with bounding boxes drawn over it
+    :param img_path: str - Path to save image
+    :param predictions: list - Result of model's work
+    :param img_size: int - Used image size for model
+    :return: None
+    """
     boxes = predictions[0]["boxes"]
     classes = predictions[0]["classes"]
 
